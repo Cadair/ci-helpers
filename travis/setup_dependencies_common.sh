@@ -70,11 +70,13 @@ if [[ -z $PYTHON_VERSION ]]; then
 fi
 
 # CONDA
-conda create $QUIET -n test python=$PYTHON_VERSION
-source activate test
+if [[ ! -d $HOME/miniconda/envs/$CONDA_ENV_NAME ]]; then
+    conda create $QUIET -n $CONDA_ENV_NAME python=$PYTHON_VERSION
+fi
+source activate $CONDA_ENV_NAME
 
 # PIN FILE
-PIN_FILE=$HOME/miniconda/envs/test/conda-meta/pinned
+PIN_FILE=$HOME/miniconda/envs/$CONDA_ENV_NAME/conda-meta/pinned
 
 if [[ $DEBUG == True ]]; then
     conda config --show
